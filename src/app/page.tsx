@@ -15,13 +15,17 @@ export default function Home() {
   const t = useTranslations('i18n');
 
   const buy = async () => {
+    console.log("is supported", invoice.isSupported());
+
     const response = await fetch('/api/buy');
     const data = await response.json();
     const split = data.link.split('/');
     const slug = split[split.length];
-    const what = await invoice.open(slug);
-    console.log(what)
-    alert(what)
+    console.log("Slug", slug);
+    console.log("Open", invoice.isOpened());
+    const result = await invoice.open(slug);
+    console.log("Result", result);
+    console.log("Open", invoice.isOpened());
   }
 
   return (
