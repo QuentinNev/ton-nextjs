@@ -17,10 +17,11 @@ export default function Home() {
   const buy = async () => {
     const response = await fetch('/api/buy');
     const data = await response.json();
-    alert(data.link);
     const split = data.link.split('/');
     const slug = split[split.length];
-    invoice.open(slug);
+    const what = invoice.open(slug);
+    console.log(what)
+    alert(what)
   }
 
   return (
