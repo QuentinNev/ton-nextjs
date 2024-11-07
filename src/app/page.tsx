@@ -20,7 +20,7 @@ export default function Home() {
     const response = await fetch('/api/buy');
     const data = await response.json();
     const split = data.link.split('/');
-    const slug = split[split.length];
+    const slug = split[split.length - 1];
     console.log("Slug", slug);
     console.log("Open", invoice.isOpened());
     const result = await invoice.open(slug);
