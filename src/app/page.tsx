@@ -19,7 +19,7 @@ export default function Home() {
     const data = await response.json();
     const split = data.link.split('/');
     const slug = split[split.length];
-    const what = invoice.open(slug);
+    const what = await invoice.open(slug);
     console.log(what)
     alert(what)
   }
