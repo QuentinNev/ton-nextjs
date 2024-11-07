@@ -19,11 +19,8 @@ export default function Home() {
 
     const response = await fetch('/api/buy');
     const data = await response.json();
-    const split = data.link.split('/');
-    const slug = split[split.length - 1];
-    console.log("Slug", slug);
     console.log("Open", invoice.isOpened());
-    const result = await invoice.open(slug);
+    const result = await invoice.open(data.link, 'url');
     console.log("Result", result);
     console.log("Open", invoice.isOpened());
   }
