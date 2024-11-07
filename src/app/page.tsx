@@ -17,7 +17,7 @@ export default function Home() {
   const buy = async () => {
     const response = await fetch('/api/buy');
     const data = await response.json();
-    invoice.open(data);
+    invoice.open(data.link);
   }
 
   return (
