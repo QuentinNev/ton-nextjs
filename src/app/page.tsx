@@ -120,7 +120,7 @@ export default function Home() {
                 <div className='flex-1'>{pack.name}</div>
                 <div className='flex-1'>
                   {pack.content.map((item, index) => (
-                    <li>{item}</li>
+                    <li key={item}>{item}</li>
                   ))}
                 </div>
                 <div className='flex-1 inline-flex space-x-2'><div>{pack.price}</div><img src={starSvg.src} /></div>
