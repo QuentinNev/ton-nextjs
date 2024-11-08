@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 
     const params: CreateInvoiceLinkParams = {
         title: 'AKATON',
-        description: '',  // Use the query param in the description
+        description: 'Bang',  // Use the query param in the description
         currency: 'XTR',
         prices: [{
             label: 'XTR',
