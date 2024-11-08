@@ -1,77 +1,149 @@
 'use client';
 
+import { useState } from 'react';
+
+import './styles.css';
+
 import { Section, Cell, Image, List, Button } from '@telegram-apps/telegram-ui';
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/components/Link/Link';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher/LocaleSwitcher';
 import { Page } from '@/components/Page';
 
 import { invoice } from '@telegram-apps/sdk-react';
 
 import tonSvg from './_assets/ton.svg';
+import starSvg from './_assets/star.svg';
 
 export default function Home() {
   const t = useTranslations('i18n');
 
   const buy = async () => {
-    console.log("is supported", invoice.isSupported());
+    const pack = packs.find(pack => selectedPack === pack.name);
 
     const response = await fetch('/api/buy');
     const data = await response.json();
     const result = await invoice.open(data.link, 'url');
   }
 
+  const [selectedPack, setPack] = useState('');
+
+  const packs: Pack[] = [
+    {
+      name: 'Small chad pack',
+      price: 150,
+      content: [
+        'Thank you ! ♥',
+        'Virtual "kick"',
+        'In-game currency'
+      ]
+    },
+    {
+      name: 'Normal chad pack',
+      price: 350,
+      content: [
+        'Thank you ! ♥',
+        'Founder shoulder badge',
+      ]
+    },
+    {
+      name: 'Super chad pack',
+      price: 750,
+      content: [
+        'Thank you ! ♥',
+        'Founder shoulder badge',
+        'Exclusive gun skin',
+        'More in-game currency'
+      ]
+    },
+    {
+      name: 'Giga chad pack',
+      price: 1000,
+      content: [
+        'Thank you ! ♥',
+        'Founder shoulder badge',
+        'Exclusive gun skin',
+        'Exclusive character skin',
+        'More in-game currency'
+      ]
+    },
+    {
+      name: 'Super giga chad pack',
+      price: 1500,
+      content: [
+        'Thank you ! ♥',
+        'Founder shoulder badge',
+        'Exclusive gun skin',
+        'Exclusive character skin',
+        'Exclusive parachute skin',
+        'More in-game currency'
+      ]
+    },
+    {
+      name: 'Super duper ultra mega giga chad ultra deluxe goty edition pack',
+      price: 2500,
+      content: [
+        'Thank you ! ♥',
+        'Founder shoulder badge',
+        'Exclusive gun skin',
+        'Exclusive character skin',
+        'Exclusive parachute skin',
+        'Exclusive pet companion',
+        'More in-game currency'
+      ]
+    },
+  ]
+
+  const handleSelectPack = (pack: Pack) => {
+    setPack(pack.name);
+  };
+
   return (
     <Page back={false}>
       <List>
-        <Section
-          header="Features"
-          footer="You can use these pages to learn more about features, provided by Telegram Mini Apps and other useful projects"
-        >
+        <Section header="TON Battleground Shop">
           <Link href="/ton-connect">
             <Cell
-              before={
-                <Image
-                  src={tonSvg.src}
-                  style={{ backgroundColor: '#007AFF' }}
-                />
-              }
+              before={<Image src={tonSvg.src} style={{ backgroundColor: '#007AFF' }} />}
               subtitle="Connect your TON wallet"
-            >
-              TON Connect
-            </Cell>
+            >TON Connect</Cell>
           </Link>
         </Section>
-        <Section
-          header="Testing ground"
-        >
-          <Button onClick={buy}>Buy</Button>
-        </Section>
-        <Section
-          header="Application Launch Data"
-          footer="These pages help developer to learn more about current launch information"
-        >
-          <Link href="/init-data">
-            <Cell subtitle="User data, chat information, technical data">
-              Init Data
-            </Cell>
-          </Link>
-          <Link href="/launch-params">
-            <Cell subtitle="Platform identifier, Mini Apps version, etc.">
-              Launch Parameters
-            </Cell>
-          </Link>
-          <Link href="/theme-params">
-            <Cell subtitle="Telegram application palette information">
-              Theme Parameters
-            </Cell>
-          </Link>
-        </Section>
-        <Section header={t('header')} footer={t('footer')}>
-          <LocaleSwitcher />
+        <Section header="Thunder packs">
+          <div className='p-8'>
+            {packs.map((pack, index) => (
+              <label
+                key={pack.name}
+                className={`p-2 pack-option ${selectedPack === pack.name ? 'selected' : ''}`}
+                onClick={() => handleSelectPack(pack)}
+              >
+                <div className='flex-1'>{pack.name}</div>
+                <div className='flex-1'>
+                  {pack.content.map((item, index) => (
+                    <li>{item}</li>
+                  ))}
+                </div>
+                <div className='flex-1 inline-flex space-x-2'><div>{pack.price}</div><img src={starSvg.src} /></div>
+                <input
+                  type="radio"
+                  name="pack"
+                  value={pack.name}
+                  checked={selectedPack === pack.name}
+                  onChange={() => handleSelectPack(pack)}
+                  className="hidden-radio"
+                />
+              </label>
+            ))}
+            <Button className='w-full' onClick={buy}>Buy selected pack</Button>
+          </div>
         </Section>
       </List>
     </Page>
   );
+}
+
+interface Pack {
+  name: string;
+  price: number; // in stars
+  content: string[]
 }
