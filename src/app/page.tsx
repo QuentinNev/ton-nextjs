@@ -21,7 +21,7 @@ export default function Home() {
   const buy = async () => {
     const pack = packs.find(pack => selectedPack === pack.name);
 
-    const response = await fetch('/api/buy');
+    const response = await fetch(`/api/buy?price=${pack?.price}`);
     const data = await response.json();
     const result = await invoice.open(data.link, 'url');
   }
