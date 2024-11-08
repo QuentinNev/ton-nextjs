@@ -5,17 +5,19 @@ import { useState } from 'react';
 import './styles.css';
 
 import { Section, Cell, Image, List, Button } from '@telegram-apps/telegram-ui';
+import { invoice, MiniAppHeaderColor, miniAppHeaderColorRGB } from '@telegram-apps/sdk-react';
+
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/components/Link/Link';
 import { Page } from '@/components/Page';
 
-import { invoice } from '@telegram-apps/sdk-react';
-
 import tonSvg from './_assets/ton.svg';
 import starSvg from './_assets/star.svg';
 
 export default function Home() {
+  miniAppHeaderColorRGB.call('007AFF');
+
   const t = useTranslations('i18n');
 
   const buy = async () => {
